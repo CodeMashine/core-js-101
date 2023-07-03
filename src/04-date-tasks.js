@@ -19,8 +19,8 @@
  *    'Tue, 26 Jan 2016 13:48:02 GMT' => Date()
  *    'Sun, 17 May 1998 03:00:00 GMT+01' => Date()
  */
-function parseDataFromRfc2822(/* value */) {
-  throw new Error('Not implemented');
+function parseDataFromRfc2822(value) {
+  return new Date(value);
 }
 
 /**
@@ -99,8 +99,6 @@ function timeSpanToString(startDate, endDate) {
   } else if (String(mill).length < 2) {
     mill = `0${mill}`;
   }
-  // return `${resDate.getUTCHours()}`;
-
   return `${hours}:${minutes}:${seconds}.${mill}`;
 }
 
@@ -121,8 +119,14 @@ function timeSpanToString(startDate, endDate) {
  *    Date.UTC(2016,3,5,18, 0) => Math.PI
  *    Date.UTC(2016,3,5,21, 0) => Math.PI/2
  */
-function angleBetweenClockHands(/* date */) {
-  throw new Error('Not implemented');
+function angleBetweenClockHands(date) {
+  let hour = date.getUTCHours();
+  if (hour > 12) hour -= 12;
+  const min = date.getUTCMinutes();
+  let degree = 0.5 * (60 * hour - 11 * min);
+  if (degree > 180) degree = 360 - degree;
+  const rad = (degree * Math.PI) / 180;
+  return Math.abs(rad);
 }
 
 
